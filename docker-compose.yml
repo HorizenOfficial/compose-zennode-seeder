@@ -1,0 +1,44 @@
+version: "3"
+
+services:
+  zen-seednode:
+    image: zencash/zen-node:${ZEN_TAG}
+    container_name: zen-seednode
+    restart: always
+    networks:
+      - node
+    ports:
+      - "9033:9033"
+    volumes:
+      - "zen-data:/mnt/zen"
+      - "zcash-params:/mnt/zcash-params"
+    environment:
+      - "OPTS=${ZEN_OPTS}"
+      - "LOCAL_USER_ID=${ZEN_LOCAL_USER_ID}"
+      - "LOCAL_GRP_ID=${ZEN_LOCAL_GRP_ID}"
+
+  zen-dnsseeder:
+    image: zencash/zen-seeder:latest
+    container_name: zen-dnsseeder
+    restart: always
+    networks:
+      - seeder
+    ports:
+      - "53:5353"
+      - "53:5353/udp"
+    volumes:
+      - "seeder-data:/mnt/seeder"
+    environment:
+      - "OPTS=${DNS_OPTS}"
+      - "LOCAL_USER_ID=${DNS_LOCAL_USER_ID}"
+      - "LOCAL_GRP_ID=${DNS_LOCAL_GRP_ID}"
+
+networks:
+  node:
+  seeder:
+
+volumes:
+  zen-data:
+  zcash-params:
+  seeder-data:
+
