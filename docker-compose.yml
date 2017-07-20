@@ -8,7 +8,7 @@ services:
     networks:
       - node
     ports:
-      - "9033:9033"
+      - "19033:19033"
     volumes:
       - "zen-data:/mnt/zen"
       - "zcash-params:/mnt/zcash-params"
